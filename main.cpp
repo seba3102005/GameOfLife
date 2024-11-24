@@ -1,9 +1,9 @@
 #include <iostream>
 #include<vector>
 #include<algorithm>
-
+#include<fstream>
 using namespace std;
-
+string full_string;
 
 class grid
 {
@@ -15,15 +15,54 @@ class grid
 public:
 
 
+
     grid()
     {
-        arr = vector<vector<int>>(20, vector<int>(20, 0));
-        arr2 = vector<vector<int>>(20, vector<int>(20, 0));
-        arr[10][11]=1;
-        arr[11][12]=1;
-        arr[12][10]=1;
-        arr[12][11]=1;
-        arr[12][12]=1;
+        arr = vector<vector<int>>(20, vector<int>(20));
+        arr2 = vector<vector<int>>(20, vector<int>(20));
+        ifstream file("file.txt");
+        if(!file)
+        {
+            cout<<"error in opening the file"<<endl;
+        }
+        else
+        {
+            string s;
+            while(file>>s)
+            {
+                full_string+=s;
+            }
+        }
+
+        if(full_string.size()!=400)
+        {
+            cout<<"the file must contain 400 character"<<endl;
+            return;
+        }
+        int count=0;
+        int count2=0;
+        for(int i=0;i<20;i++)
+        {
+            for(int j=0;j<20;j++)
+            {
+
+                arr[i][j] = full_string[count2]-'0';
+
+
+                if(arr[i][j]==0)
+                {
+                    cout<<'-'<<' ';
+                }
+                else
+                {
+                    cout<<arr[i][j]<<' ';
+                }
+                count2++;
+
+            }
+            cout<<endl;
+        }
+
 
     }
     pair<int,int> smallestI ()
@@ -72,8 +111,6 @@ public:
     }
 
 
-
-
     pair<int,int> smallestJ ()
     {
         vector<int>vec2;
@@ -105,7 +142,7 @@ public:
                 {
                     cout<<'-'<<' ';
                 }
-                else
+                else if(arr2[i][j]==1)
                 {
                     cout<<arr2[i][j]<<' ';
                 }
@@ -120,9 +157,18 @@ public:
         {
             for(int j=0;j<20;j++)
             {
-
                 arr[i][j]=arr2[i][j];
+            }
+        }
+    }
 
+    void initialize_playing_grid()
+    {
+        for(int i=0;i<20;i++)
+        {
+            for(int j=0;j<20;j++)
+            {
+                arr2[i][j]=arr[i][j];
             }
         }
     }
@@ -165,8 +211,6 @@ public:
             for(int j=firstJ;j<=lastJ;j++)
             {
                 sum=0;
-
-
 
                 if(i==0 && j==0)
                 {
@@ -244,6 +288,7 @@ public:
 
 int main()
 {
+    bool flag =true;
     grid example;
     while (true)
     {
@@ -251,8 +296,10 @@ int main()
         string choice;
         cin>>choice;
 
+
         if(choice=="1")
         {
+
             example.reset1();
             example.reset2();
         }
@@ -263,15 +310,34 @@ int main()
         }
         else if(choice=="3")
         {
+            flag=false;
+            if(example.countNeighbours()==0)
+            {
+                cout<<"All the grid is dead"<<endl;
+                continue;
+
+            }
             example.neighbours();
             example.equalize();
         }
         else if(choice =="4")
         {
+            if(flag)
+            {
+                example.initialize_playing_grid();
+            }
             example.display();
         }
         else if(choice =="5")
         {
+            flag=false;
+
+            if(example.countNeighbours()==0)
+            {
+                cout<<"All the grid is dead"<<endl;
+                continue;
+
+            }
             cout<<"please the number of turns that you want to play at once: "<<endl;
             int num;
             cin>>num;
