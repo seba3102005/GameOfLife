@@ -39,8 +39,10 @@ public:
             cout<<"the file must contain 400 character"<<endl;
             return;
         }
-        int count=0;
+
         int count2=0;
+        cout<<endl<<"        The Initial Grid"<<endl;
+
         for(int i=0;i<20;i++)
         {
             for(int j=0;j<20;j++)
@@ -129,6 +131,33 @@ public:
         }
         sort(vec2.begin(),vec2.end());
         return make_pair((vec2[0]-1),(vec2[vec2.size()-1]+1));
+    }
+
+    void setter()
+    {
+        int count2=0;
+        cout<<"     The New Grid is "<<endl;
+        for(int i=0;i<20;i++)
+        {
+            for(int j=0;j<20;j++)
+            {
+
+                arr[i][j] = full_string[count2]-'0';
+
+
+                if(arr[i][j]==0)
+                {
+                    cout<<'-'<<' ';
+                }
+                else
+                {
+                    cout<<arr[i][j]<<' ';
+                }
+                count2++;
+
+            }
+            cout<<endl;
+        }
     }
 
 
@@ -292,23 +321,52 @@ int main()
     grid example;
     while (true)
     {
-        cout<<"1)Reset"<<endl<<"2)count neighbours"<<endl<<"3)Next generation"<<endl<<"4)Display"<<endl<<"5)Run several turns"<<endl<<"6)Exit"<<endl;
+        cout<<"1)Reset"<<endl<<"2)load a new grid from the file"<<endl<<"3)count neighbours"<<endl<<"4)Next generation"<<endl<<"5)Display"<<endl<<"6)Run several turns"<<endl<<"7)Exit"<<endl;
         string choice;
         cin>>choice;
 
 
         if(choice=="1")
         {
-
             example.reset1();
             example.reset2();
         }
-        else if (choice=="2")
+        else if(choice =="2")
+        {
+            cout<<"Enter the file's name: "<<endl;
+            string name;
+            cin>>name;
+            ifstream file(name);
+            if(!file)
+            {
+                cout<<"Error in opening the file"<<endl;
+
+            }
+            else
+            {
+                string t;
+                full_string="";
+                while(file>>t)
+                {
+                    full_string+=t;
+                }
+                if(full_string.size()!=400)
+                {
+                    cout<<"the file must contain 400 character"<<endl;
+                    continue;
+                }
+                else
+                {
+                    example.setter();
+                }
+            }
+        }
+        else if (choice=="3")
         {
             int ans = example.countNeighbours();
-            cout<<ans<<endl;
+            cout<<"The Number of living cells are: "<<ans<<endl;
         }
-        else if(choice=="3")
+        else if(choice=="4")
         {
             flag=false;
             if(example.countNeighbours()==0)
@@ -320,7 +378,7 @@ int main()
             example.neighbours();
             example.equalize();
         }
-        else if(choice =="4")
+        else if(choice =="5")
         {
             if(flag)
             {
@@ -328,7 +386,7 @@ int main()
             }
             example.display();
         }
-        else if(choice =="5")
+        else if(choice =="6")
         {
             flag=false;
 
@@ -348,7 +406,7 @@ int main()
             }
 
         }
-        else if(choice=="6")
+        else if(choice=="7")
         {
             cout<<"Exiting the program"<<endl<<"Bye Bye"<<endl;
             break;
