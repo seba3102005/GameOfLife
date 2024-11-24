@@ -153,22 +153,58 @@ public:
         int firstJ = smallestJ().first;
         int lastJ = smallestJ().second;
 
-        firstI = max(firstI, 1);
-        lastI = min(lastI, 18);
-        firstJ = max(firstJ, 1);
-        lastJ = min(lastJ, 18);
+        firstI = max(0,firstI);
+        lastI = min(19,lastI);
+        firstJ = max(0,firstJ);
+        lastJ = min(19,lastJ);
+
+
 
         for(int i=firstI;i<=lastI;i++)
         {
             for(int j=firstJ;j<=lastJ;j++)
             {
-//                if(i==18 || i==0 || j==18 ||j==0)
-//                {
-//                    continue;
-//                }
-
                 sum=0;
-                sum=arr[i+1][j]+arr[i-1][j]+arr[i][j+1]+arr[i][j-1]+arr[i+1][j+1]+arr[i+1][j-1]+arr[i-1][j+1]+arr[i-1][j-1];
+
+
+
+                if(i==0 && j==0)
+                {
+                    sum=arr[i+1][j]+arr[i][j+1]+arr[i+1][j+1];
+                }
+                else if(i==0 && j==19)
+                {
+                    sum=arr[i+1][j]+arr[i][j-1]+arr[i+1][j-1];
+                }
+                else if(i==19 && j==0)
+                {
+                    sum=arr[i-1][j]+arr[i][j+1]+arr[i-1][j+1];
+                }
+                else if(i==19 && j==19)
+                {
+                    sum=arr[i-1][j]+arr[i][j-1]+arr[i-1][j-1];
+                }
+                else if(i==0)
+                {
+                    sum=arr[i+1][j]+arr[i][j+1]+arr[i][j-1]+arr[i+1][j+1]+arr[i+1][j-1];
+                }
+                else if(i==19)
+                {
+                    sum=arr[i-1][j]+arr[i][j+1]+arr[i][j-1]+arr[i-1][j+1]+arr[i-1][j-1];
+                }
+                else if(j==0)
+                {
+                    sum=arr[i+1][j]+arr[i-1][j]+arr[i][j+1]+arr[i+1][j+1]+arr[i-1][j+1];
+                }
+                else if(j==19)
+                {
+                    sum=arr[i+1][j]+arr[i-1][j]+arr[i][j-1]+arr[i+1][j-1]+arr[i-1][j-1];
+                }
+                else
+                {
+                    sum=arr[i+1][j]+arr[i-1][j]+arr[i][j+1]+arr[i][j-1]+arr[i+1][j+1]+arr[i+1][j-1]+arr[i-1][j+1]+arr[i-1][j-1];
+                }
+
 
                 if(arr[i][j]==0)
                 {
@@ -211,7 +247,7 @@ int main()
     grid example;
     while (true)
     {
-        cout<<"1)reset"<<endl<<"2)count neighbours"<<endl<<"3)next generation"<<endl<<"4)display"<<endl<<"5)run"<<endl<<"6)Exit"<<endl;
+        cout<<"1)Reset"<<endl<<"2)count neighbours"<<endl<<"3)Next generation"<<endl<<"4)Display"<<endl<<"5)Run several turns"<<endl<<"6)Exit"<<endl;
         string choice;
         cin>>choice;
 
