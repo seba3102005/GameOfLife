@@ -18,27 +18,8 @@ public:
 
     grid()
     {
-        arr = vector<vector<int>>(20, vector<int>(20));
-        arr2 = vector<vector<int>>(20, vector<int>(20));
-        ifstream file("file.txt");
-        if(!file)
-        {
-            cout<<"error in opening the file"<<endl;
-        }
-        else
-        {
-            string s;
-            while(file>>s)
-            {
-                full_string+=s;
-            }
-        }
-
-        if(full_string.size()!=400)
-        {
-            cout<<"the file must contain 400 character"<<endl;
-            return;
-        }
+        arr = vector<vector<int>>(20, vector<int>(20,0));
+        arr2 = vector<vector<int>>(20, vector<int>(20,0));
 
         int count2=0;
         cout<<endl<<"        The Initial Grid"<<endl;
@@ -48,7 +29,7 @@ public:
             for(int j=0;j<20;j++)
             {
 
-                arr[i][j] = full_string[count2]-'0';
+
 
 
                 if(arr[i][j]==0)
@@ -317,12 +298,14 @@ public:
 
 int main()
 {
+    cout<<"===== Welcome to the Game of Life ======"<<endl;
     bool flag =true;
     grid example;
     while (true)
     {
-        cout<<"1)Reset"<<endl<<"2)load a new grid from the file"<<endl<<"3)count neighbours"<<endl<<"4)Next generation"<<endl<<"5)Display"<<endl<<"6)Run several turns"<<endl<<"7)Exit"<<endl;
+        cout<<"1)Reset"<<endl<<"2)load a new grid from a file"<<endl<<"3)count neighbours"<<endl<<"4)Next generation"<<endl<<"5)Display"<<endl<<"6)Run several turns"<<endl<<"7)Exit"<<endl;
         string choice;
+        cout<<"choose a number from 1 to 7: ";
         cin>>choice;
 
 
